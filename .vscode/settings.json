@@ -1,0 +1,8 @@
+{
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true,
+  "prettier.trailingComma": "all"
+}
