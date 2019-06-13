@@ -11,6 +11,8 @@ const theme = createMuiTheme({
   },
 });
 
+console.log(theme);
+
 const Layout = ({ children }) => (
   <MuiThemeProvider theme={theme}>
     <CssBaseline />

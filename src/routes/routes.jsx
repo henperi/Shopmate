@@ -6,6 +6,8 @@ import TopBar from '../components/Navigation/TopBar';
 import Layout from '../layouts/Layout';
 import Home from '../pages/Home';
 import Shop from '../pages/shop/Shop';
+import ShopItem from '../pages/shop/ShopItem';
+import MainLanding from '../pages/landing/MainLanding';
 
 const NotFound = () => (
   <div>
@@ -21,7 +23,9 @@ const Routes = () => (
 
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/l" component={MainLanding} />
         <Route exact path="/shop" component={Shop} />
+        <Route exact path="/shop-item" component={ShopItem} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

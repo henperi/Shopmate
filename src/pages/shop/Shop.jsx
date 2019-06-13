@@ -6,6 +6,7 @@ import { FaFacebookF } from 'react-icons/fa';
 
 import ShopBanner from '../../components/Banners/ShopBanner';
 import SubscriptionButton from '../../components/Buttons/SubscriptionButton';
+import Hero from '../../components/Hero/Hero';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -67,7 +68,7 @@ const Shop = () => {
           </Grid>
         </Box>
 
-        <ShopBanner />
+        <Hero height={45} />
       </Box>
       <Box mx={2} className={`${classes.container}`}>
         <Grid container spacing={2} direction="row" alignItems="center">

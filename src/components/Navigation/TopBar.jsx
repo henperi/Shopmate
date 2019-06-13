@@ -46,7 +46,7 @@ const TopBar = () => {
 
           <Grid item xs={2} sm={1} md={6}>
             <Hidden smDown>
-              <Link to="/shop" className={classes.white}>
+              <Link to="/l" className={classes.white}>
                 <Typography variant="h6" color="inherit" className={classes.navLink}>
                   Women
                 </Typography>

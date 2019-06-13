@@ -1,13 +1,6 @@
 import React from 'react';
 import { makeStyles, Grid, Typography } from '@material-ui/core';
 
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import SubscriptionButton from '../components/Buttons/SubscriptionButton';
-
 const DarkFooter = () => {
   const classes = makeStyles();
   return (

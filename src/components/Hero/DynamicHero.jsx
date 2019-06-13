@@ -48,38 +48,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Hero = (props) => {
+const DynamicHero = (props) => {
   const classes = useStyles(props);
-  const { content } = { props };
+  const { content, contentPosition } = props;
 
   return (
     <Paper className={classes.hero}>
       <div className={classes.overlay} />
 
-      <Grid container>
+      <Grid container justify={contentPosition}>
         <Grid item sm={6} md={6}>
-          {content || (
-            <div className={classes.heroContent}>
-              <Typography component="h3" variant="h3" color="inherit" gutterBottom>
-                Background and Development
-              </Typography>
-              <Typography variant="h5" color="inherit" paragraph>
-                Multiple lines of text that form the lede, informing new readers quickly and
-                efficiently about what&apos;s
-              </Typography>
-              <Button
-                size="medium"
-                variant="contained"
-                className={`${classes.chubby} ${classes.customButton}`}
-              >
-                View All
-              </Button>
-            </div>
-          )}
+          {content && content}
         </Grid>
       </Grid>
     </Paper>
   );
 };
 
-export default Hero;
+export default DynamicHero;
