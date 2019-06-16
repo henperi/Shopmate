@@ -131,7 +131,6 @@ const ShopItem = () => {
 
                   {[1, 2, 3, 4, 5].map(() => (
                     <Radio
-                      checked={false}
                       color="primary"
                       name="radio-button-demo"
                       inputProps={{ 'aria-label': 'E' }}
