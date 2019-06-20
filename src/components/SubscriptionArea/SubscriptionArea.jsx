@@ -28,7 +28,6 @@ export const SubscriptionTypeA = (props) => {
       direction="row"
       justify="center"
       alignItems="center"
-      textAlign="center"
       className={`${classes.container} ${classes.subscriptionArea}`}
     >
       <Grid item sm={6}>

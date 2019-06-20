@@ -9,6 +9,8 @@ import {
   Button,
 } from '@material-ui/core';
 
+import redShirt from '../../assets/red-shirt.png';
+
 const useStyles = makeStyles(theme => ({
   chubby: {
     borderRadius: theme.spacing(2.5),
@@ -39,7 +41,7 @@ const VerticalCard = () => {
         component="img"
         alt="Contemplative Reptile"
         height="320"
-        image="https://source.unsplash.com/user/erondu"
+        image={redShirt}
         title="Contemplative Reptile"
       />
       <CardContent>

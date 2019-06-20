@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
 import longImage from '../../assets/longImage.jpeg';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -47,15 +48,9 @@ const Carousel = (props) => {
         {thumbnail && (
           <Grid item lg={12}>
             <div className={classes.thumbnailsArea}>
-              <div className={classes.thumbnail}>
-                <img alt="longImage" width="100%" src={longImage} />
-              </div>
-              <div className={classes.thumbnail}>
-                <img alt="longImage" width="100%" src="https://source.unsplash.com/user/erondu" />
-              </div>
-              <div className={classes.thumbnail}>
-                <img alt="longImage" width="100%" src={longImage} />
-              </div>
+              {[1, 2, 3].map(() => (
+                <Thumbnail />
+              ))}
             </div>
           </Grid>
         )}

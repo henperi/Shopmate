@@ -8,6 +8,7 @@ import CustomImage from '../../components/Images/CutomImage';
 import Hero from '../../components/Hero/Hero';
 import LightFooter from '../../components/Footers/LightFooter';
 import { SubscriptionTypeA } from '../../components/SubscriptionArea/SubscriptionArea';
+import heroImage from '../../assets/hero.png';
 
 export const CustomButton = withStyles(theme => ({
   root: {
@@ -20,7 +21,7 @@ export const CustomButton = withStyles(theme => ({
 
 const MainLanding = () => (
   <main>
-    <Hero />
+    <Hero image={heroImage} />
     <Box mx={3} my={3}>
       <Grid container spacing={3}>
         {[1, 2, 3, 4].map(item => (

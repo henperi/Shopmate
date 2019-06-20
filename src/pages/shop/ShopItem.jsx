@@ -12,14 +12,15 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
 import Radio from '@material-ui/core/Radio';
-// import FaCircle from '@material-ui/icons/RadioButtonChecked';
 
 import { FaStar, FaRegHeart, FaCircle } from 'react-icons/fa';
+import clsx from 'clsx';
 import VerticalCard from '../../components/Cards/VerticalCard';
 import LightFooter from '../../components/Footers/LightFooter';
 import Carousel from '../../components/Carousel/Carousel';
 import LinkRouter from '../../components/LinkRouter/LinkRouter';
 import Text from '../../components/Text/Text';
+import Reviews from '../../components/Reviews/Reviews';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,11 +30,11 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto auto',
   },
   carousel: {
-    padding: '20px',
     margin: 'auto',
+    padding: theme.spacing(3, 0),
   },
   details: {
-    padding: '10px 20px',
+    padding: theme.spacing(4, 8),
   },
   reviews: {
     backgroundColor: theme.palette.grey[200],
@@ -85,125 +86,121 @@ const ShopItem = () => {
   return (
     <main>
       <Box mx={3} my={5}>
-        <Paper>
-          <Grid container spacing={2} justify="center">
-            <Grid item md={6} className={classes.carouselArea} justify="center">
+        <Paper className={classes.details}>
+          <Grid container spacing={10} justify="center">
+            <Grid item md={5} className={classes.carouselArea}>
               <div className={classes.carousel}>
                 <Carousel thumbnail />
               </div>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <div className={classes.details}>
-                <Grid item xs={12} md={12}>
-                  <Breadcrumbs
-                    separator="›"
-                    aria-label="Breadcrumb"
-                    className={classes.itemDetails}
-                  >
-                    <LinkRouter color="inherit" to="/shop" onClick="">
-                      MUI
-                    </LinkRouter>
-                    <LinkRouter color="inherit" to="/shop" onClick="">
-                      MUI
-                    </LinkRouter>
-                    <LinkRouter color="inherit" to="/shop" onClick="">
-                      Mens Clothing & Accessories
-                    </LinkRouter>
-                  </Breadcrumbs>
-                </Grid>
-                <Grid item xs={12} lg={12} className={classes.itemDetails}>
-                  {[1, 2, 3, 4].map(star => (
-                    <FaStar key={star} className={classes.gold} />
-                  ))}
-                  <FaStar className={classes.default} />
+            <Grid item xs={12} md={7}>
+              <Grid item xs={12} md={12}>
+                <Breadcrumbs separator="›" aria-label="Breadcrumb" className={classes.itemDetails}>
+                  <LinkRouter color="inherit" to="/shop">
+                    MUI
+                  </LinkRouter>
+                  <LinkRouter color="inherit" to="/shop">
+                    MUI
+                  </LinkRouter>
+                  <LinkRouter color="inherit" to="/shop">
+                    Mens Clothing & Accessories
+                  </LinkRouter>
+                </Breadcrumbs>
+              </Grid>
+              <Grid item xs={12} lg={12} className={classes.itemDetails}>
+                {[1, 2, 3, 4].map(star => (
+                  <FaStar key={star} className={classes.gold} />
+                ))}
+                <FaStar className={classes.default} />
 
-                  <Text classNames={['h2']} gutterBottom>
-                    Super Oversized T-Shirt With Raw Sleeves In Brown
-                  </Text>
+                <Text classnames={['h2']} gutterBottom>
+                  Super Oversized T-Shirt With Raw Sleeves In Brown
+                </Text>
 
-                  <Text color="primary" classNames={['h2']} gutterBottom>
-                    £13
-                  </Text>
+                <Text color="primary" classnames={['h2']} gutterBottom>
+                  £13
+                </Text>
 
-                  <Text classNames={['body1']} gutterBottom>
-                    Color
-                  </Text>
+                <Text classnames={['body1']} gutterBottom>
+                  Color
+                </Text>
 
-                  {[1, 2, 3, 4, 5].map(() => (
-                    <Radio
-                      color="primary"
-                      name="radio-button-demo"
-                      inputProps={{ 'aria-label': 'E' }}
-                      icon={<FaCircle fontSize="small" />}
-                      checkedIcon={<FaCircle fontSize="large" className={classes.gold} />}
-                    />
-                  ))}
-                  <Text classNames={['body1']} gutterBottom>
-                    Size
-                  </Text>
-                  <Grid item>
-                    {['xs', 'm', 'l', 'xl', 'xxl'].map(type => (
-                      <Button color="inherit" variant="contained" className={classes.button}>
-                        {type}
-                      </Button>
-                    ))}
-                  </Grid>
-
-                  <Text classNames={['body1']} weight={700} gutterBottom>
-                    Quantity
-                  </Text>
-
-                  <Grid container>
-                    <Fab color="inherit" aria-label="Add" className={classes.button}>
-                      <AddIcon />
-                    </Fab>
-                    <Paper className={[classes.inputField, classes.button]} component="span">
-                      <InputBase
-                        fullWidth
-                        defaultValue="2"
-                        type="text"
-                        inputProps={{
-                          style: {
-                            textAlign: 'center',
-                          },
-                        }}
-                      />
-                    </Paper>
-                    <Fab color="inherit" aria-label="Add" className={classes.button}>
-                      <Remove />
-                    </Fab>
-                  </Grid>
-                  <Grid container>
+                {[1, 2, 3, 4, 5].map(type => (
+                  <Radio
+                    key={`${type}rad`}
+                    color="primary"
+                    name="radio-button-demo"
+                    inputProps={{ 'aria-label': 'E' }}
+                    icon={<FaCircle fontSize="small" />}
+                    checkedIcon={<FaCircle fontSize="large" className={classes.gold} />}
+                  />
+                ))}
+                <Text classnames={['body1']} gutterBottom>
+                  Size
+                </Text>
+                <Grid item>
+                  {['xs', 'm', 'l', 'xl', 'xxl'].map(type => (
                     <Button
-                      color="primary"
+                      key={`${type}but`}
+                      color="inherit"
                       variant="contained"
-                      aria-label="Add"
-                      size="large"
-                      className={[classes.bigButton, classes.chubby]}
+                      className={classes.button}
                     >
-                      Add To Cart
+                      {type}
                     </Button>
-                    <Button
-                      aria-label="Add"
-                      size="large"
-                      className={[classes.bigButton, classes.chubby]}
-                    >
-                      <FaRegHeart className={classes.heart} />
-                      <Text classNames={['body1']} gutterBottom>
-                        Add to Wish List
-                      </Text>
-                    </Button>
-                  </Grid>
+                  ))}
                 </Grid>
-              </div>
+
+                <Text classnames={['body1']} weight={700} gutterBottom>
+                  Quantity
+                </Text>
+
+                <Grid container>
+                  <Fab color="inherit" aria-label="Add" className={classes.button}>
+                    <AddIcon />
+                  </Fab>
+                  <Paper className={clsx(classes.inputField, classes.button)} component="span">
+                    <InputBase
+                      fullWidth
+                      defaultValue="2"
+                      type="text"
+                      inputProps={{
+                        style: {
+                          textAlign: 'center',
+                        },
+                      }}
+                    />
+                  </Paper>
+                  <Fab color="inherit" aria-label="Add" className={classes.button}>
+                    <Remove />
+                  </Fab>
+                </Grid>
+                <Grid container>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    aria-label="Add"
+                    size="large"
+                    className={clsx(classes.bigButton, classes.chubby)}
+                  >
+                    Add To Cart
+                  </Button>
+                  <Button
+                    aria-label="Add"
+                    size="large"
+                    className={clsx(classes.bigButton, classes.chubby)}
+                  >
+                    <FaRegHeart className={classes.heart} />
+                    <Text classnames={['body1']} gutterBottom>
+                      Add to Wish List
+                    </Text>
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Paper>
-        <Paper className={classes.reviews}>
-          <Grid item xs={12} lg={12}>
-            {}
-          </Grid>
-        </Paper>
+        <Reviews />
         <Grid container spacing={3}>
           {[1, 2, 3, 4].map(item => (
             <Grid key={item} item sm={6} md={4} lg={3}>

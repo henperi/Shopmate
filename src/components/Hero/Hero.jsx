@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  makeStyles, Paper, Grid, Typography, Hidden, Button,
+  makeStyles, Paper, Grid, Typography, Button,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(2),
-    backgroundImage: props => `url(${props.backgroundImage || 'https://source.unsplash.com/user/erondu'})`,
+    backgroundImage: props => `url(${props.image || 'https://source.unsplash.com/user/erondu'})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',

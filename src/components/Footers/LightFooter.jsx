@@ -30,8 +30,8 @@ const LightFooter = (props) => {
     <Paper>
       <Grid container direction="row" alignItems="center" className={classes.container}>
         <Hidden xsDown>
-          {[1, 2, 3, 4].map(() => (
-            <Grid item lg={3}>
+          {[1, 2, 3, 4].map(index => (
+            <Grid item lg={3} key={`${index}-type`}>
               <Typography variant="h5" color="inherit" paragraph>
                 Multiple
               </Typography>
@@ -39,8 +39,8 @@ const LightFooter = (props) => {
           ))}
         </Hidden>
         <div className={classes.icons}>
-          {[1, 2, 3, 4].map(() => (
-            <Fab color="secondary" aria-label="Edit" className={classes.fab}>
+          {[1, 2, 3, 4].map(index => (
+            <Fab key={`${index}-type`} color="secondary" aria-label="Edit" className={classes.fab}>
               <Icon>
                 <FaFacebookF />
               </Icon>

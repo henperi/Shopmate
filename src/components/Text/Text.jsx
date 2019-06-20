@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '150%',
     fontWeight: props => props.weight,
     padding: props => props.padding,
-    margin: props => props.padding,
+    margin: props => props.margin,
   },
   h2: {
     fontFamily: 'Montserrat',
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '150%',
     fontWeight: props => props.weight,
     padding: props => props.padding,
-    margin: props => props.padding,
+    margin: props => props.margin,
   },
   h3: {
     fontFamily: 'Montserrat',
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '150%',
     fontWeight: props => props.weight,
     padding: props => props.padding,
-    margin: props => props.padding,
+    margin: props => props.margin,
   },
   topBar: {
     fontFamily: 'Montserrat',
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '240%',
     fontWeight: props => props.weight,
     padding: props => props.padding,
-    margin: props => props.padding,
+    margin: props => props.margin,
   },
   body1: {
     fontFamily: 'Open Sans',
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '150%',
     fontWeight: props => props.weight,
     padding: props => props.padding,
-    margin: props => props.padding,
+    margin: props => props.margin,
   },
   body2: {
     fontFamily: 'Open Sans',
@@ -56,17 +56,17 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '200%',
     fontWeight: props => props.weight,
     padding: props => props.padding,
-    margin: props => props.padding,
+    margin: props => props.margin,
   },
 }));
 
 const Text = (props) => {
-  const { children, classNames } = props;
+  const { children, classnames } = props;
   const classes = useStyles(props);
 
   return (
     <Typography
-      className={classNames && clsx(classNames.map(className => classes[className]))}
+      className={classnames && clsx(classnames.map(className => classes[className]))}
       {...props}
     >
       {children}

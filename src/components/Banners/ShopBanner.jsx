@@ -2,6 +2,7 @@ import React from 'react';
 import {
   makeStyles, Paper, Grid, Typography, Hidden,
 } from '@material-ui/core';
+import heroImage from '../../assets/hero.png';
 
 const useStyles = makeStyles(theme => ({
   imageContainer: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
   heroContent: {
     position: 'relative',
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ShopBanner = () => {
+const ShopBanner = (props) => {
   const classes = useStyles();
 
   return (
@@ -50,7 +51,7 @@ const ShopBanner = () => {
       <div className={classes.imageContainer}>
         <img
           alt="Contemplative Reptile"
-          src="https://source.unsplash.com/user/erondu"
+          src={props.image || 'https://source.unsplash.com/user/erondu' || heroImage}
           className={classes.image}
         />
         <div className={classes.overlay}>

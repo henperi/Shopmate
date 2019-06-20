@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CardTravelIcon from '@material-ui/icons/CardTravel';
 import Search from '@material-ui/icons/Search';
 import withWidth from '@material-ui/core/withWidth';
+import Cart from '../Cart/Cart';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +32,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TopBar = () => {
+  const [cart, setCart] = useState({
+    isOpen: false,
+  });
+
+  const toggleModal = () => {
+    setCart({
+      ...cart,
+      isOpen: !cart.isOpen,
+    });
+  };
+
+  console.log(cart);
+
   const classes = useStyles();
   return (
     <AppBar position="fixed" color="primary">
@@ -78,7 +92,13 @@ const TopBar = () => {
             <IconButton edge="start" className="" color="inherit" aria-label="Search">
               <Search />
             </IconButton>
-            <IconButton edge="start" className="" color="inherit" aria-label="Travel">
+            <IconButton
+              edge="start"
+              className=""
+              color="inherit"
+              aria-label="Travel"
+              onClick={toggleModal}
+            >
               <Badge badgeContent={4} color="secondary">
                 <CardTravelIcon />
               </Badge>
@@ -91,6 +111,7 @@ const TopBar = () => {
           </Grid>
         </Grid>
       </Toolbar>
+      <Cart isOpen={cart.isOpen} handleClose={toggleModal} />
     </AppBar>
   );
 };
