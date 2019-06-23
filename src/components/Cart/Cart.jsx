@@ -11,8 +11,6 @@ import {
   Divider,
   Hidden,
   DialogActions,
-  Paper,
-  Button,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -20,6 +18,7 @@ import clsx from 'clsx';
 import Text from '../Text/Text';
 import CartItem from './CartItem';
 import CustomButton from '../Buttons/CustomButtons';
+import LinkRouter from '../LinkRouter/LinkRouter';
 
 const useStyles = makeStyles(theme => ({
   content: { padding: theme.spacing(3, 10) },
@@ -137,9 +136,11 @@ const Cart = (props) => {
         >
           Back To Shop
         </CustomButton>
-        <CustomButton color="primary" variant="contained" aria-label="Add" size="large" chubby>
-          Checkout
-        </CustomButton>
+        <LinkRouter to="/checkout" onClick={handleClose}>
+          <CustomButton color="primary" variant="contained" aria-label="Add" size="large" chubby>
+            Checkout
+          </CustomButton>
+        </LinkRouter>
       </DialogActions>
     </Dialog>
   );

@@ -22,12 +22,21 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     padding: theme.spacing(0),
   },
+  root: {
+    // position: 'absolute',
+    // display: 'block',
+    // bottom: 0,
+    // justifyContent: 'flex-end',
+    // alignItems: 'flex-end',
+    // alignContent: 'flex-end',
+    // alignSelf: 'flex-end',
+  },
 }));
 
 const LightFooter = (props) => {
   const classes = useStyles(props);
   return (
-    <Paper>
+    <Paper className={classes.root}>
       <Grid container direction="row" alignItems="center" className={classes.container}>
         <Hidden xsDown>
           {[1, 2, 3, 4].map(index => (

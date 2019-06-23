@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SubscriptionButton = () => {
+const SubscriptionButton = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.inputField} component="span">
@@ -35,7 +35,7 @@ const SubscriptionButton = () => {
       <InputBase
         type="email"
         fullWidth
-        placeholder="Enter your email address"
+        placeholder={props.placeholder || 'Enter your email address'}
         inputProps={{ 'aria-label': 'Search Google Maps' }}
       />
       <Button
@@ -44,7 +44,7 @@ const SubscriptionButton = () => {
         color="primary"
         className={`${classes.chubby} ${classes.chubby}`}
       >
-        Subscribe
+        {props.label || 'Subscribe'}
       </Button>
     </Paper>
   );
