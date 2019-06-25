@@ -9,6 +9,11 @@ import SubscriptionButton from '../../components/Buttons/SubscriptionButton';
 import Hero from '../../components/Hero/Hero';
 import menWear from '../../assets/menWear.png';
 import bottomBarner from '../../assets/bottomBarner.png';
+import ProductCard from '../../components/Cards/ProductCard';
+
+import polo1 from '../../assets/images/polo-1.png';
+import polo2 from '../../assets/images/polo-2.png';
+import sweeter from '../../assets/images/sweeter.png';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -45,26 +50,36 @@ const Shop = () => {
   return (
     <main>
       <Box mx={2} my={4}>
-        <ShopBanner image={menWear} />
+        {<ShopBanner image={menWear} />}
 
         <Box my={2}>
           <Grid container spacing={2}>
-            <Grid item xs={12} lg={3}>
+            <Grid item xs={12} sm={4} md={4} lg={3}>
               <Paper className={`${classes.paper} ${classes.filter}`}>This is section 1</Paper>
             </Grid>
-            <Grid item xs={12} lg={9}>
+            <Grid item xs={12} sm={8} md={8} lg={9}>
               <Grid container spacing={2}>
-                {[1, 2, 3, 4, 5, 6].map(item => (
-                  <Grid xs={12} item lg={4}>
-                    <Paper className={classes.paper}>This is section 1</Paper>
+                {[1, 2].map(item => (
+                  <Grid key={`${item}-product-x`} item xs={12} sm={6} md={6} lg={4}>
+                    <ProductCard image={polo1} />
+                  </Grid>
+                ))}
+                {[1].map(item => (
+                  <Grid key={`${item}-product-x`} item xs={12} sm={6} md={6} lg={4}>
+                    <ProductCard image={polo2} />
+                  </Grid>
+                ))}
+                {[1, 2, 3].map(item => (
+                  <Grid key={`${item}-product-x`} item xs={12} sm={6} md={6} lg={4}>
+                    <ProductCard image={sweeter} />
                   </Grid>
                 ))}
               </Grid>
             </Grid>
 
-            {[1, 2, 3].map(item => (
-              <Grid item xs={12} lg={4}>
-                <Paper className={`${classes.paper}`}>This is section 1</Paper>
+            {[1, 2, 3, 4].map(item => (
+              <Grid key={`${item}-product-x`} item xs={12} sm={6} md={4} lg={3}>
+                <ProductCard image={sweeter} />
               </Grid>
             ))}
           </Grid>

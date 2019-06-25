@@ -11,6 +11,7 @@ import {
 
 import manPushing from '../../assets/images/manPushing.png';
 import OverlayedImage from '../Images/OverlayedImage';
+import Text from '../Text/Text';
 
 const useStyles = makeStyles(theme => ({
   chubby: {
@@ -33,12 +34,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const VerticalCard = () => {
-  const classes = useStyles();
+const VerticalCard = (props) => {
+  const classes = useStyles(props);
 
   return (
     <Card className={classes.verticalCard}>
-      <OverlayedImage alt="Contemplative Reptile" image={manPushing} />
+      <OverlayedImage
+        alt="Contemplative Reptile"
+        image={manPushing}
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      >
+        <Text color="inherit" classnames={['h2']}>
+          Men
+        </Text>
+      </OverlayedImage>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           Lizard

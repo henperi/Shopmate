@@ -28,14 +28,16 @@ const MainLanding = () => (
   <main>
     <Hero image={heroImage} />
     <Box mx={3} my={3}>
-      <Grid container spacing={3}>
-        <Grid item sm={12} md={12} lg={12} style={{ width: '100%', display: 'flex' }}>
-          <HorizontalCard
-            image={bagImage}
-            btnLabel="Shop Now"
-            title="Vera Bradley"
-            overlayLabel="Sale"
-          />
+      <Grid container spacing={2}>
+        <Grid container justify="center" spacing={3}>
+          <Grid item sm={12} md={12} lg={8} style={{}}>
+            <HorizontalCard
+              image={bagImage}
+              btnLabel="Shop Now"
+              title="Vera Bradley"
+              overlayLabel="Sale"
+            />
+          </Grid>
         </Grid>
 
         {[].map(item => (
@@ -44,7 +46,7 @@ const MainLanding = () => (
           </Grid>
         ))}
         {[1].map(item => (
-          <Grid key={item} item xs={12} sm={6} md={4} lg={3}>
+          <Grid key={item} item xs={12} sm={6} md={4} lg={4}>
             <Grid item sm={12}>
               <OverlayedImage image="" rgbaColor="132,230,241,1" raised>
                 <Text color="inherit" classnames={['h2']}>
@@ -64,7 +66,7 @@ const MainLanding = () => (
         ))}
 
         {[0].map(item => (
-          <Grid key={item} item sm={6} md={8} lg={3}>
+          <Grid key={item} item sm={6} md={8} lg={8}>
             <VerticalCard />
           </Grid>
         ))}
