@@ -4,5 +4,6 @@
   "javascript.format.enable": false,
   "prettier.eslintIntegration": true,
   "editor.formatOnSave": true,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "javascript.implicitProjectConfig.checkJs": true
 }

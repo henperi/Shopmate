@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -15,9 +13,12 @@ import withWidth from '@material-ui/core/withWidth';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import { Slide } from '@material-ui/core';
+import clsx from 'clsx';
 import Cart from '../Cart/Cart';
 import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
+import LinkRouter from '../LinkRouter/LinkRouter';
+import Text from '../Text/Text';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,8 +32,43 @@ const useStyles = makeStyles(theme => ({
     color: '#FFFF',
     textDecoration: 'none',
   },
+  navContainer: {
+    padding: theme.spacing(0, 4),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0, 2),
+    },
+  },
+  textAuth: {
+    cursor: 'pointer',
+    color: theme.palette.primary.main,
+  },
+  navRoutes: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  linkItem: {
+    boxSizing: 'border-box',
+    padding: theme.spacing(1, 2),
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
   navIcons: {
     justifyContent: 'flex-end',
+    textAlign: 'left',
+  },
+  hideSm: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  default: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.primary.main,
+  },
+  alignRight: {
+    textAlign: 'right',
   },
 }));
 
@@ -91,98 +127,124 @@ const TopBar = (props) => {
     toggleSignupModal();
   };
 
-  const classes = useStyles();
+  const classes = useStyles(props);
+
   return (
     <React.Fragment>
       <SlideOnScroll {...props}>
         <AppBar position="sticky" color="default">
-          <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit">
-              Photos
-            </Typography>
-            <IconButton
-              edge="start"
-              className=""
-              color="inherit"
-              aria-label="Travel"
-              onClick={toggleSigninModal}
-            >
-              <Badge badgeContent={4} color="secondary">
-                <CardTravelIcon />
-              </Badge>
-            </IconButton>
+          <Toolbar variant="dense" className={classes.navContainer}>
+            <Grid container className={classes.root} spacing={1}>
+              <Grid item xs={7} sm={5} md={3} className={clsx(classes.navRoutes)}>
+                <Text
+                  variant="h6"
+                  color="inherit"
+                >
+                  Hi!
+                  {' '}
+                  <span
+                    onClick={toggleSigninModal}
+                    role="presentation"
+                    className={classes.textAuth}
+                  >
+                    Signin
+                    {' '}
+                  </span>
+                  or
+                  <span
+                    onClick={toggleSignupModal}
+                    role="presentation"
+                    className={classes.textAuth}
+                  >
+                    {' '}
+                    Register
+                  </span>
+                </Text>
+              </Grid>
 
-            <IconButton
-              edge="start"
-              className=""
-              color="inherit"
-              aria-label="Travel"
-              onClick={toggleSignupModal}
-            >
-              <Badge badgeContent={4} color="secondary">
-                <CardTravelIcon />
-              </Badge>
-            </IconButton>
+              <Grid item xs={1} sm={1} md={5} className={clsx(classes.navRoutes, classes.hideSm)}>
+                <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
+                  <Text>Daily Deals</Text>
+                </LinkRouter>
+                <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
+                  <Text>Sell</Text>
+                </LinkRouter>
+                <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
+                  <Text>Help & Contact</Text>
+                </LinkRouter>
+              </Grid>
+
+              <Grid item xs={5} sm={7} md={4} className={clsx(classes.navRoutes, classes.navIcons)}>
+                <Hidden xsDown>
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="Travel"
+                    onClick={toggleCartModal}
+                    className={classes.linkItem}
+                  >
+                    <Badge badgeContent={4} color="secondary">
+                      <CardTravelIcon />
+                    </Badge>
+                  </IconButton>
+                </Hidden>
+
+                <LinkRouter
+                  color="inherit"
+                  to=""
+                  className={clsx(classes.linkItem, classes.alignRight)}
+                >
+                  <Text>Your bag: £3.99</Text>
+                </LinkRouter>
+              </Grid>
+            </Grid>
           </Toolbar>
         </AppBar>
       </SlideOnScroll>
 
       <AppBar position="sticky" color="primary">
-        <Toolbar variant="dense">
+        <Toolbar className={classes.navContainer}>
           <Grid container className={classes.root} spacing={1}>
             <Grid item xs={5} sm={5} md={3}>
-              <Link to="/" className={classes.white}>
-                <Typography variant="h4" color="inherit" className={classes.navLink}>
-                  SHOPMATE
-                </Typography>
-              </Link>
+              <LinkRouter color="inherit" to="/" className={classes.linkItem}>
+                <Text variant="h4">SHOPMATE</Text>
+              </LinkRouter>
             </Grid>
 
-            <Grid item xs={2} sm={1} md={6}>
-              <Hidden smDown>
-                <Link to="/l" className={classes.white}>
-                  <Typography variant="h6" color="inherit" className={classes.navLink}>
-                    Women
-                  </Typography>
-                </Link>
-                <Link to="/shop" className={classes.white}>
-                  <Typography variant="h6" color="inherit" className={classes.navLink}>
-                    Men
-                  </Typography>
-                </Link>
-                <Link to="/checkout" className={classes.white}>
-                  <Typography variant="h6" color="inherit" className={classes.navLink}>
-                    Kids
-                  </Typography>
-                </Link>
-                <Link to="/shop" className={classes.white}>
-                  <Typography variant="h6" color="inherit" className={classes.navLink}>
-                    Shoes
-                  </Typography>
-                </Link>
-                <Link to="/shop" className={classes.white}>
-                  <Typography variant="h6" color="inherit" className={classes.navLink}>
-                    Brands
-                  </Typography>
-                </Link>
-              </Hidden>
+            <Grid item xs={1} sm={1} md={4} className={clsx(classes.navRoutes, classes.hideSm)}>
+              <LinkRouter color="inherit" to="/l" className={classes.linkItem}>
+                <Text variant="h6">Women</Text>
+              </LinkRouter>
+              <LinkRouter color="inherit" to="/shop" className={classes.linkItem}>
+                <Text variant="h6">Men</Text>
+              </LinkRouter>
+              <LinkRouter color="inherit" to="/shop-item" className={classes.linkItem}>
+                <Text variant="h6">Kids</Text>
+              </LinkRouter>
+              <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
+                <Text variant="h6">Shoes</Text>
+              </LinkRouter>
+              <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
+                <Text variant="h6">Brands</Text>
+              </LinkRouter>
             </Grid>
 
-            <Grid item xs={5} sm={6} md={3} className={`${classes.navLink} ${classes.navIcons}`}>
+            <Grid item xs={7} sm={7} md={5} className={clsx(classes.navRoutes, classes.navIcons)}>
               <IconButton edge="start" className="" color="inherit" aria-label="Search">
                 <Search />
               </IconButton>
               <IconButton
                 edge="start"
-                className=""
                 color="inherit"
                 aria-label="Travel"
                 onClick={toggleCartModal}
+                className={classes.linkItem}
               >
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={4} color="secondary" classes={{ badge: classes.default }}>
                   <CardTravelIcon />
                 </Badge>
               </IconButton>
+
               <Hidden mdUp>
                 <IconButton edge="start" className="" color="inherit" aria-label="Menu">
                   <MenuIcon />

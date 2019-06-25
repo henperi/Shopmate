@@ -9,6 +9,7 @@ import Hero from '../../components/Hero/Hero';
 import LightFooter from '../../components/Footers/LightFooter';
 import { SubscriptionTypeA } from '../../components/SubscriptionArea/SubscriptionArea';
 import heroImage from '../../assets/hero.png';
+import bagImage from '../../assets/images/bag.png';
 
 export const CustomButton = withStyles(theme => ({
   root: {
@@ -24,14 +25,18 @@ const MainLanding = () => (
     <Hero image={heroImage} />
     <Box mx={3} my={3}>
       <Grid container spacing={3}>
+        <Grid item sm={12} md={12} lg={6} style={{ width: '100%' }}>
+          <HorizontalCard
+            image={bagImage}
+            btnLabel="Shop Now"
+            title="Vera Bradley"
+            overlayLabel="Sale"
+          />
+        </Grid>
+
         {[1, 2, 3, 4].map(item => (
           <Grid key={item} item sm={6} md={4} lg={3}>
             <VerticalCard />
-          </Grid>
-        ))}
-        {[1, 2, 3, 4].map(item => (
-          <Grid key={item} item sm={12} md={6} lg={6}>
-            <HorizontalCard />
           </Grid>
         ))}
         {[1, 2].map(item => (
