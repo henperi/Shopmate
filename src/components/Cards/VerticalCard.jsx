@@ -9,7 +9,8 @@ import {
   Button,
 } from '@material-ui/core';
 
-import redShirt from '../../assets/red-shirt.png';
+import manPushing from '../../assets/images/manPushing.png';
+import OverlayedImage from '../Images/OverlayedImage';
 
 const useStyles = makeStyles(theme => ({
   chubby: {
@@ -36,14 +37,8 @@ const VerticalCard = () => {
   const classes = useStyles();
 
   return (
-    <Card className={`${classes.central} ${classes.verticalCard}`}>
-      <CardMedia
-        component="img"
-        alt="Contemplative Reptile"
-        height="320"
-        image={redShirt}
-        title="Contemplative Reptile"
-      />
+    <Card className={classes.verticalCard}>
+      <OverlayedImage alt="Contemplative Reptile" image={manPushing} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           Lizard

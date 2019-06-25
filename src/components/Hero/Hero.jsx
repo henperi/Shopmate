@@ -6,7 +6,7 @@ import {
 const useStyles = makeStyles(theme => ({
   hero: {
     position: 'relative',
-    backgroundColor: theme.palette.grey[800],
+    // backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(2),
     backgroundImage: props => `url(${props.image || 'https://source.unsplash.com/user/erondu'})`,
