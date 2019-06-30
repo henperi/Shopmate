@@ -2,6 +2,7 @@ import React from 'react';
 import {
   makeStyles, Paper, Grid, Typography, Button,
 } from '@material-ui/core';
+import PropType from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   hero: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     // backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(2),
-    backgroundImage: props => `url(${props.image || 'https://source.unsplash.com/user/erondu'})`,
+    backgroundImage: props => `url(${props.image})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -48,9 +49,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Hero = (props) => {
+const DefaultHeroContent = (props) => {
   const classes = useStyles(props);
-  const { content } = { props };
+  return (
+    <div>
+      <Typography component="h3" variant="h3" color="inherit" gutterBottom>
+        Background and Development
+      </Typography>
+      <Typography variant="h5" color="inherit" paragraph>
+        Multiple lines of text that form the lede, informing new readers quickly and efficiently
+        about what&apos;s
+      </Typography>
+      <Button
+        size="medium"
+        variant="contained"
+        className={`${classes.chubby} ${classes.customButton}`}
+      >
+        View All
+      </Button>
+    </div>
+  );
+};
+
+const Hero = ({ image, height, children }) => {
+  const classes = useStyles({ image, height });
 
   return (
     <Paper className={classes.hero}>
@@ -58,28 +80,25 @@ const Hero = (props) => {
 
       <Grid container>
         <Grid item sm={6} md={6}>
-          {content || (
-            <div className={classes.heroContent}>
-              <Typography component="h3" variant="h3" color="inherit" gutterBottom>
-                Background and Development
-              </Typography>
-              <Typography variant="h5" color="inherit" paragraph>
-                Multiple lines of text that form the lede, informing new readers quickly and
-                efficiently about what&apos;s
-              </Typography>
-              <Button
-                size="medium"
-                variant="contained"
-                className={`${classes.chubby} ${classes.customButton}`}
-              >
-                View All
-              </Button>
-            </div>
-          )}
+          <div className={classes.heroContent}>
+            <div>{children}</div>
+          </div>
         </Grid>
       </Grid>
     </Paper>
   );
+};
+
+Hero.propTypes = {
+  children: PropType.element,
+  image: PropType.string,
+  height: PropType.number,
+};
+
+Hero.defaultProps = {
+  children: <DefaultHeroContent />,
+  image: 'https://source.unsplash.com/user/erondu',
+  height: 55,
 };
 
 export default Hero;

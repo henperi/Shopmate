@@ -36,16 +36,12 @@ const useStyles = makeStyles(theme => ({
 
 const ProductImg = (props) => {
   const classes = useStyles(props);
-  const { children, justifyContent, alignItems } = props;
+  const { children /* justifyContent, alignItems */ } = props;
 
   return (
     <div className={classes.imageContainer}>
       <img alt={props.alt} src={props.image} className={classes.image} />
-      {
-        <div container className={classes.overlayContent}>
-          {children}
-        </div>
-      }
+      {<div className={classes.overlayContent}>{children}</div>}
     </div>
   );
 };

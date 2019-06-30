@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
-import longImage from '../../assets/longImage.jpeg';
 import Thumbnail from '../Thumbnail/Thumbnail';
 
 const useStyles = makeStyles(theme => ({
@@ -35,21 +34,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Carousel = (props) => {
-  const { thumbnail } = props;
-  const classes = useStyles();
+  const { thumbnail, images } = props;
+  const classes = useStyles(props);
+
+  const [currentImage, setcurrentImage] = useState('');
 
   return (
     <React.Fragment>
       <Grid container>
         <Grid item lg={12} className={classes.carousel}>
-          <img alt="fff" src={longImage} width="100%" />
+          <img alt="fff" src={currentImage || images[0]} width="100%" />
         </Grid>
 
         {thumbnail && (
           <Grid item lg={12}>
             <div className={classes.thumbnailsArea}>
-              {[1, 2, 3].map(() => (
-                <Thumbnail />
+              {images.map(image => (
+                <div key={image} onClick={() => setcurrentImage(image)} role="presentation">
+                  <Thumbnail image={image} />
+                </div>
               ))}
             </div>
           </Grid>

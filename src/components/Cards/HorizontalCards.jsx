@@ -2,9 +2,9 @@ import React from 'react';
 import {
   Card, CardContent, Typography, makeStyles, CardActions, Button,
 } from '@material-ui/core';
-import bagImage from '../../assets/images/bag.png';
+// import bagImage from '../../assets/images/bag.png';
+// import longImage from '../../assets/longImage.jpeg';
 import redShirt from '../../assets/red-shirt.png';
-import longImage from '../../assets/longImage.jpeg';
 
 const useStyles = makeStyles(theme => ({
   chubby: {

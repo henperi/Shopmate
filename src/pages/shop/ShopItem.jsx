@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Box,
@@ -13,6 +13,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
 import Radio from '@material-ui/core/Radio';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { FaStar, FaRegHeart, FaCircle } from 'react-icons/fa';
 import clsx from 'clsx';
 import VerticalCard from '../../components/Cards/VerticalCard';
@@ -21,6 +23,8 @@ import Carousel from '../../components/Carousel/Carousel';
 import LinkRouter from '../../components/LinkRouter/LinkRouter';
 import Text from '../../components/Text/Text';
 import Reviews from '../../components/Reviews/Reviews';
+import { getProductById } from '../../reduxStore/modules/products/actions';
+import appConstants from '../../appConstants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,8 +84,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ShopItem = () => {
+const ShopItem = (props) => {
   const classes = useStyles();
+
+  const { match } = props;
+  const { itemId } = match.params;
+
+  const dispatch = useDispatch();
+  const item = useSelector(state => state.products.currentProduct);
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    dispatch(getProductById(itemId));
+  }, [dispatch, itemId]);
+
+  useEffect(() => {
+    if (item.image) {
+      const { image, image_2: image2, thumbnail } = item;
+
+      setImages([
+        `${appConstants.imageUrl}${image}`,
+        `${appConstants.imageUrl}${image2}`,
+        `${appConstants.imageUrl}${thumbnail}`,
+      ]);
+    }
+  }, [item]);
 
   return (
     <main>
@@ -90,20 +118,17 @@ const ShopItem = () => {
           <Grid container spacing={10} justify="center">
             <Grid item md={5} className={classes.carouselArea}>
               <div className={classes.carousel}>
-                <Carousel thumbnail />
+                <Carousel thumbnail images={images} />
               </div>
             </Grid>
             <Grid item xs={12} md={7}>
               <Grid item xs={12} md={12}>
                 <Breadcrumbs separator="›" aria-label="Breadcrumb" className={classes.itemDetails}>
-                  <LinkRouter color="inherit" to="/shop">
-                    MUI
+                  <LinkRouter color="inherit" to="/shop/Regional/1">
+                    Regional
                   </LinkRouter>
-                  <LinkRouter color="inherit" to="/shop">
-                    MUI
-                  </LinkRouter>
-                  <LinkRouter color="inherit" to="/shop">
-                    Mens Clothing & Accessories
+                  <LinkRouter color="inherit" to={`/shop-item/${itemId}`}>
+                    {item.name}
                   </LinkRouter>
                 </Breadcrumbs>
               </Grid>
@@ -114,11 +139,11 @@ const ShopItem = () => {
                 <FaStar className={classes.default} />
 
                 <Text classnames={['h2']} gutterBottom>
-                  Super Oversized T-Shirt With Raw Sleeves In Brown
+                  {item.name}
                 </Text>
 
                 <Text color="primary" classnames={['h2']} gutterBottom>
-                  £13
+                  {`£${item.price}`}
                 </Text>
 
                 <Text classnames={['body1']} gutterBottom>

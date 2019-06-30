@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import longImage from '../../assets/longImage.jpeg';
 
 const useStyles = makeStyles(theme => ({
   thumbnail: {
@@ -24,7 +23,7 @@ const Thumbnail = (props) => {
 
   return (
     <div className={classes.thumbnail}>
-      <img alt="longImage" width="100%" src={longImage} />
+      <img alt="longImage" width="100%" src={props.image} />
     </div>
   );
 };

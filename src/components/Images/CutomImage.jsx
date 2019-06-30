@@ -6,7 +6,7 @@ import useStyles from './style';
 const CustomImage = ({
   src, alt, OverlayContent, overlayPosition,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(null);
   return (
     <div className={classes.imageContainer}>
       <img alt={alt} src={src} className={classes.image} />

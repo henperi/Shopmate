@@ -1,12 +1,6 @@
 import React from 'react';
 import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  makeStyles,
-  CardActions,
-  Button,
+  Card, CardContent, Typography, makeStyles, CardActions, Button,
 } from '@material-ui/core';
 
 import manPushing from '../../assets/images/manPushing.png';

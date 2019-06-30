@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +21,8 @@ import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
 import LinkRouter from '../LinkRouter/LinkRouter';
 import Text from '../Text/Text';
+
+// import { getDepartments } from '../../reduxStore/modules/departments/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -84,6 +88,9 @@ const SlideOnScroll = (props) => {
 };
 
 const TopBar = (props) => {
+  /**
+   * State Goes here
+   */
   const [cart, setCart] = useState({
     isOpen: false,
   });
@@ -95,6 +102,15 @@ const TopBar = (props) => {
   const [signup, setSignup] = useState({
     isOpen: false,
   });
+
+  /**
+   * Redux selector goes here
+   */
+  const departments = useSelector(state => state.departments);
+
+  /**
+   * Handler methods goe here
+   */
 
   const toggleCartModal = () => {
     setCart({
@@ -136,10 +152,7 @@ const TopBar = (props) => {
           <Toolbar variant="dense" className={classes.navContainer}>
             <Grid container className={classes.root} spacing={1}>
               <Grid item xs={7} sm={5} md={3} className={clsx(classes.navRoutes)}>
-                <Text
-                  variant="h6"
-                  color="inherit"
-                >
+                <Text variant="h6" color="inherit">
                   Hi!
                   {' '}
                   <span
@@ -212,21 +225,16 @@ const TopBar = (props) => {
             </Grid>
 
             <Grid item xs={1} sm={1} md={4} className={clsx(classes.navRoutes, classes.hideSm)}>
-              <LinkRouter color="inherit" to="/l" className={classes.linkItem}>
-                <Text variant="h6">Women</Text>
-              </LinkRouter>
-              <LinkRouter color="inherit" to="/shop" className={classes.linkItem}>
-                <Text variant="h6">Men</Text>
-              </LinkRouter>
-              <LinkRouter color="inherit" to="/shop-item" className={classes.linkItem}>
-                <Text variant="h6">Kids</Text>
-              </LinkRouter>
-              <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
-                <Text variant="h6">Shoes</Text>
-              </LinkRouter>
-              <LinkRouter color="inherit" to="/deals" className={classes.linkItem}>
-                <Text variant="h6">Brands</Text>
-              </LinkRouter>
+              {departments.map(department => (
+                <LinkRouter
+                  key={`${department.department_id}-${department.name}`}
+                  color="inherit"
+                  to={`/shop/${department.name}/${department.department_id}`}
+                  className={classes.linkItem}
+                >
+                  <Text variant="h6">{department.name}</Text>
+                </LinkRouter>
+              ))}
             </Grid>
 
             <Grid item xs={7} sm={7} md={5} className={clsx(classes.navRoutes, classes.navIcons)}>

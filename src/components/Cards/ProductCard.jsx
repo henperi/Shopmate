@@ -56,20 +56,20 @@ const ProductCard = (props) => {
       </ProductImg>
       <CardContent className={classes.central}>
         <Text color="inherit" classnames={['h3']} weight="100">
-          New Look T-Shirt In Gradient Fade
+          {props.name}
         </Text>
       </CardContent>
 
       <CardActions className={`${classes.central} ${classes.cardActions}`}>
         {isHovered ? (
-          <LinkRouter color="inherit" to="/shop-item" className={classes.linkItem}>
+          <LinkRouter color="inherit" to={`/shop-item/${props.id}`} className={classes.linkItem}>
             <Button size="medium" variant="contained" color="primary" className={classes.chubby}>
               Buy Now
             </Button>
           </LinkRouter>
         ) : (
           <Text color="primary" classnames={['h3']}>
-            £14.99
+            {`£${props.price}`}
           </Text>
         )}
       </CardActions>

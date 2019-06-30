@@ -1,14 +1,17 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+
 import Routes from './routes/routes';
+import store from './reduxStore';
 
 /**
  * @description Starting Application with the routes
- * @returns {jsx} jsx
+ * @returns {JSX.Element} jsx
  */
 const App = () => (
-  <React.Fragment>
+  <Provider store={store}>
     <Routes />
-  </React.Fragment>
+  </Provider>
 );
 
 export default App;
