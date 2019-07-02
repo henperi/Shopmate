@@ -23,7 +23,7 @@ const getCategories = (pageNo = 1, limit = 10) => async (dispatch) => {
 
     return dispatch(setCategories(categories.data.rows));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 
@@ -38,7 +38,7 @@ export const getCategoriesByDepartmentId = departmentId => async (dispatch) => {
 
     return dispatch(setCategories(categories.data));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Box } from '@material-ui/core';
 import { FaStar } from 'react-icons/fa';
 
@@ -12,10 +12,21 @@ const useStyles = makeStyles(theme => ({
     fontSize: '20px',
   },
 }));
-const Star = (props) => {
+
+const UnratedStar = ({ setReviewFormRating, ...props }) => {
   const classes = useStyles(props);
   const starsArray = [1, 2, 3, 4, 5];
-  const { rating } = props;
+  const [rating, setRating] = useState(0);
+
+  /**
+   * @description A method to handle when a star is clicked
+   * @param {number} starIndex
+   * @returns {Function} setReviewRating to immedaitely set the rating to the parent form
+   */
+  const handleStarClick = (starIndex) => {
+    setRating(starIndex);
+    return setReviewFormRating(starIndex);
+  };
 
   return (
     <Box my={2}>
@@ -23,10 +34,11 @@ const Star = (props) => {
         <FaStar
           key={`${star}-starArray`}
           className={rating >= star ? classes.gold : classes.grey}
+          onClick={() => handleStarClick(star)}
         />
       ))}
     </Box>
   );
 };
 
-export default Star;
+export default UnratedStar;

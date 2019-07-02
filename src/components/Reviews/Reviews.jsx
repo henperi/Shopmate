@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Paper, Grid, makeStyles, Fab, TextField, Button,
 } from '@material-ui/core';
@@ -8,6 +8,7 @@ import { FaRegHeart, FaRegComment } from 'react-icons/fa';
 import clsx from 'clsx';
 import Text from '../Text/Text';
 import Star from '../Stars/Star';
+import UnratedStar from '../Stars/UnratedStar';
 
 const useStyles = makeStyles(theme => ({
   reviews: {
@@ -33,38 +34,58 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Reviews = () => {
-  const classes = useStyles();
+const Reviews = ({ reviews, ...props }) => {
+  const classes = useStyles(props);
+
+  const [reviewForm, setReviewForm] = useState({
+    nickname: '',
+    reviewBody: '',
+    rating: null,
+  });
+
+  const setReviewRating = rating => setReviewForm({ ...reviewForm, rating });
+  const handleOnChange = event => setReviewForm({
+    ...reviewForm,
+    [event.target.name]: event.target.value,
+  });
+
+  console.log(reviewForm);
+
   return (
     <Paper className={classes.reviews}>
       <Grid container spacing={2} className={classes.section1}>
         <Grid item xs={12} lg={12}>
           <Text classnames={['h2']}>Product reviews</Text>
         </Grid>
-        <Grid item lg={4}>
-          <Star />
-          <Text classnames={['h3']}>Pablo Permins</Text>
-          <Text classnames={['body2']}>one hour ago</Text>
-        </Grid>
-        <Grid item lg={8}>
-          <Text classnames={['body1']} gutterBottom>
-            Got this through the post the other day and right from opening the packet I knew this
-            was quality, put it on and I was right!! Well done
-          </Text>
-          <Fab color="inherit" aria-label="Add" size="small" className={classes.button}>
-            <FaRegHeart />
-          </Fab>
-          <Text classnames={['body1']} padding="5px" component="span">
-            113
-          </Text>
-          <Fab color="inherit" aria-label="Add" size="small" className={classes.button}>
-            <FaRegComment />
-          </Fab>
-          <Text classnames={['body1']} padding="5px" component="span">
-            113
-          </Text>
-        </Grid>
       </Grid>
+
+      {reviews.map(review => (
+        <Grid key={review.name} container spacing={2} className={classes.section1}>
+          <Grid item lg={4}>
+            <Star rating={review.rating} />
+            <Text classnames={['h3']}>{review.name}</Text>
+            <Text classnames={['body2']}>{review.created_on}</Text>
+          </Grid>
+          <Grid item lg={8} className={classes.alignCenter}>
+            <Text classnames={['body1']} gutterBottom>
+              {review.review}
+            </Text>
+
+            <Fab color="inherit" aria-label="Add" size="small" className={classes.button}>
+              <FaRegHeart />
+            </Fab>
+            <Text classnames={['body1']} padding="5px" component="span">
+              {Math.round(Math.random() * 100)}
+            </Text>
+            <Fab color="inherit" aria-label="Add" size="small" className={classes.button}>
+              <FaRegComment />
+            </Fab>
+            <Text classnames={['body1']} padding="5px" component="span">
+              {Math.round(Math.random() * 100)}
+            </Text>
+          </Grid>
+        </Grid>
+      ))}
       <Divider />
       <Grid container spacing={2} className={classes.section1}>
         <Grid item xs={12} lg={12}>
@@ -77,12 +98,14 @@ const Reviews = () => {
             </Grid>
             <Grid item xs={12} lg={8}>
               <TextField
+                name="nickname"
                 id="outlined-name"
                 label="Nickname"
                 className={classes.textField}
                 margin="dense"
                 variant="outlined"
                 fullWidth
+                onChange={handleOnChange}
               />
             </Grid>
             <Grid item xs={12} lg={4} className={classes.alignCenter}>
@@ -90,6 +113,7 @@ const Reviews = () => {
             </Grid>
             <Grid item xs={12} lg={8}>
               <TextField
+                name="reviewBody"
                 id="outlined-name"
                 label="Review"
                 className={classes.textField}
@@ -98,6 +122,7 @@ const Reviews = () => {
                 fullWidth
                 multiline
                 rows={5}
+                onChange={handleOnChange}
               />
               <Text classnames={['body2']}>Your review must be at least 50 characters</Text>
             </Grid>
@@ -105,7 +130,7 @@ const Reviews = () => {
               <Text classnames={['h3']}>Overall rating</Text>
             </Grid>
             <Grid item xs={12} lg={8}>
-              <Star />
+              <UnratedStar setReviewFormRating={setReviewRating} />
 
               <Button
                 color="primary"

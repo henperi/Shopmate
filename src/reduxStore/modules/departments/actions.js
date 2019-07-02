@@ -21,7 +21,7 @@ export const getDepartments = () => async (dispatch) => {
 
     return dispatch(setDepartments(departments.data));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 

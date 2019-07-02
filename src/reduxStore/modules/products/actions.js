@@ -63,7 +63,7 @@ export const getProducts = (pageNo = 1, limit = 10, descriptionLength = 50) => a
 
     return dispatch(setViewProducts(products.data.rows));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 
@@ -88,7 +88,7 @@ export const getSearchProducts = (
 
     return dispatch(setSearchedProducts(products.data.rows));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 
@@ -102,7 +102,7 @@ export const getAllProducts = () => async (dispatch) => {
 
     return dispatch(setAllProducts(products.data.rows));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 
@@ -117,7 +117,7 @@ export const getProductById = productId => async (dispatch) => {
 
     return dispatch(setCurrentProduct(products.data));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 
@@ -143,7 +143,7 @@ export const getProductsByDepartmentId = (
     return dispatch(setViewProducts(categories.data.rows));
   } catch (error) {
     console.log(error);
-    return dispatch();
+    return console.log(error);
   }
 };
 
@@ -168,7 +168,7 @@ export const getProductsByCategoryId = (
 
     return dispatch(setViewProducts(categories.data));
   } catch (error) {
-    return dispatch();
+    return console.log(error);
   }
 };
 
