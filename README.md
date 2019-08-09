@@ -1,5 +1,23 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## About Shopmate
+
+Shopmate is a simple clothing e-commerce application with the following listed features
+
+- #### Users can view all items when entering the website
+- #### Items are displayed properly based on the selected department and category
+- #### Users can search items through search box
+- #### Support paging if we have too many items
+- #### Users can see item details by selecting a specific item
+- #### Users can add items to their shopping carts
+- #### Users can register/login using website custom forms, or social login libraries
+- #### Users can update personal profiles with shipping addresses and other info
+- #### Users can checkout with 3rd party payment gateways: Stripe. (On the pipeline)
+
+## Additional Info
+
+This project using `jss` entirely and `react-hooks`. Only a maximum of 1 class based component would be used on this application.
+
 ## Available Scripts
 
 In the project directory, you can run:
