@@ -163,10 +163,10 @@ export const getProductsByCategoryId = (
 ) => async (dispatch) => {
   try {
     const categories = await axiosInstance.get(
-      `/products/inCategories/${categoryId}?page=${pageNo}&limit=${limit}&descriptionLength=${descriptionLength}`,
+      `/products/inCategory/${categoryId}?page=${pageNo}&limit=${limit}&descriptionLength=${descriptionLength}`,
     );
 
-    return dispatch(setViewProducts(categories.data));
+    return dispatch(setViewProducts(categories.data.rows));
   } catch (error) {
     return console.log(error);
   }

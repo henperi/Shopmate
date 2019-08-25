@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react';
 import {
-  makeStyles, Paper, Grid, Typography, Box, Icon, Fab,
+  makeStyles, Grid, Typography, Box, Icon, Fab,
 } from '@material-ui/core';
 import { FaFacebookF } from 'react-icons/fa';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-// import ShopBanner from '../../components/Banners/ShopBanner';
-// import menWear from '../../assets/menWear.png';
 import SubscriptionButton from '../../components/Buttons/SubscriptionButton';
 import Hero from '../../components/Hero/Hero';
 import bottomBarner from '../../assets/bottomBarner.png';
 import ProductCard from '../../components/Cards/ProductCard';
-
-// import polo1 from '../../assets/images/polo-1.png';
-// import polo2 from '../../assets/images/polo-2.png';
-// import sweeter from '../../assets/images/sweeter.png';
 import {
   getProductsByDepartmentId,
   clearViewProducts,
+  getProductsByCategoryId,
 } from '../../reduxStore/modules/products/actions';
 import { getCategoriesByDepartmentId } from '../../reduxStore/modules/categories/actions';
+import SideBar from '../../components/SideBar/SideBar';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -62,8 +58,10 @@ const Shop = (props) => {
   const { name: departmentName, id } = match.params;
 
   const dispatch = useDispatch();
-
   const products = useSelector(state => state.products.viewableProducts);
+  const categories = useSelector(state => state.categories);
+
+  console.log(products);
 
   useEffect(() => {
     dispatch(getProductsByDepartmentId(id));
@@ -72,12 +70,14 @@ const Shop = (props) => {
     return () => dispatch(clearViewProducts());
   }, [dispatch, id]);
 
+  const handleCategoryClick = (categoryId) => {
+    dispatch(clearViewProducts());
+    dispatch(getProductsByCategoryId(categoryId));
+  };
+
   return (
     <main>
       <Box mx={2} my={4}>
-        {
-          // <ShopBanner image={menWear} />
-        }
         <Hero image={bottomBarner} height={30}>
           <Typography
             component="h3"
@@ -93,43 +93,57 @@ const Shop = (props) => {
         <Box my={2}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4} md={4} lg={3}>
-              <Paper className={`${classes.paper} ${classes.filter}`}>
-                This is the filter section
-              </Paper>
+              <SideBar
+                departmentName={departmentName}
+                categories={categories}
+                handleCategoryClick={handleCategoryClick}
+              />
             </Grid>
             <Grid item xs={12} sm={8} md={8} lg={9}>
-              <Grid container spacing={2}>
-                {products.slice(0, 6).map(product => (
-                  <Grid
-                    key={`${product.product_id}-specificproduct`}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={6}
-                    lg={4}
-                  >
-                    <ProductCard
-                      image={`https://backendapi.turing.com/images/products/${product.thumbnail}`}
-                      name={product.name}
-                      id={product.product_id}
-                      price={product.price}
-                      discountedPrice={product.discounted_price}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
+              {!products.length ? (
+                <p>Loading...</p>
+              ) : (
+                <Grid container spacing={2}>
+                  {products.slice(0, 6).map(product => (
+                    <Grid
+                      key={`${product.product_id}-specificproduct`}
+                      item
+                      xs={12}
+                      sm={6}
+                      md={6}
+                      lg={4}
+                    >
+                      <ProductCard
+                        image={`https://backendapi.turing.com/images/products/${product.thumbnail}`}
+                        name={product.name}
+                        id={product.product_id}
+                        price={product.price}
+                        discountedPrice={product.discounted_price}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
             </Grid>
 
-            {products.slice(6, 10).map(product => (
-              <Grid key={`${product.product_id}-specificproduct`} item xs={12} sm={6} md={4} lg={3}>
-                <ProductCard
-                  image={`https://backendapi.turing.com/images/products/${product.thumbnail}`}
-                  name={product.name}
-                  price={product.price}
-                  discountedPrice={product.discounted_price}
-                />
-              </Grid>
-            ))}
+            {!products.length
+              && products.slice(6, 10).map(product => (
+                <Grid
+                  key={`${product.product_id}-specificproduct`}
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                >
+                  <ProductCard
+                    image={`https://backendapi.turing.com/images/products/${product.thumbnail}`}
+                    name={product.name}
+                    price={product.price}
+                    discountedPrice={product.discounted_price}
+                  />
+                </Grid>
+              ))}
           </Grid>
         </Box>
 
