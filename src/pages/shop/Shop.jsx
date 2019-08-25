@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   makeStyles, Grid, Typography, Box, Icon, Fab,
 } from '@material-ui/core';
 import { FaFacebookF } from 'react-icons/fa';
-
+import Pagination from 'material-ui-flat-pagination';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SubscriptionButton from '../../components/Buttons/SubscriptionButton';
@@ -50,18 +50,31 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     opacity: '1',
   },
+  paginate: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+  },
 }));
 
 const Shop = (props) => {
-  const classes = useStyles();
-  const { match } = props;
+  const { match, location } = props;
   const { name: departmentName, id } = match.params;
 
+  const classes = useStyles();
   const dispatch = useDispatch();
   const products = useSelector(state => state.products.viewableProducts);
   const categories = useSelector(state => state.categories);
 
-  console.log(products);
+  // local state
+  const [pagination, setPagination] = useState({
+    offset: 0,
+    limit: 10,
+  });
+
+  const [categoryId, setCategoryId] = useState(null);
+
+  console.log('pro', products.count);
 
   useEffect(() => {
     dispatch(getProductsByDepartmentId(id));
@@ -70,9 +83,26 @@ const Shop = (props) => {
     return () => dispatch(clearViewProducts());
   }, [dispatch, id]);
 
-  const handleCategoryClick = (categoryId) => {
-    dispatch(clearViewProducts());
-    dispatch(getProductsByCategoryId(categoryId));
+  const handleCategoryClick = (catId) => {
+    dispatch(getProductsByCategoryId(catId));
+    setCategoryId(catId);
+    setPagination({
+      ...pagination,
+      offset: 0,
+    });
+  };
+
+  const handlePaginationClick = (offset) => {
+    const pageNumber = offset / pagination.limit + 1;
+    setPagination({
+      ...pagination,
+      offset,
+    });
+
+    if (location.search.includes('?categories')) {
+      return dispatch(getProductsByCategoryId(categoryId, pageNumber));
+    }
+    return dispatch(getProductsByDepartmentId(id, pageNumber));
   };
 
   return (
@@ -100,11 +130,20 @@ const Shop = (props) => {
               />
             </Grid>
             <Grid item xs={12} sm={8} md={8} lg={9}>
-              {!products.length ? (
+              <div className={classes.paginate}>
+                <Pagination
+                  limit={pagination.limit}
+                  offset={pagination.offset}
+                  total={products.count}
+                  currentPageColor="secondary"
+                  onClick={(e, offset) => handlePaginationClick(offset)}
+                />
+              </div>
+              {!products.rows.length ? (
                 <p>Loading...</p>
               ) : (
                 <Grid container spacing={2}>
-                  {products.slice(0, 6).map(product => (
+                  {products.rows.slice(0, 6).map(product => (
                     <Grid
                       key={`${product.product_id}-specificproduct`}
                       item
@@ -126,8 +165,8 @@ const Shop = (props) => {
               )}
             </Grid>
 
-            {!products.length
-              && products.slice(6, 10).map(product => (
+            {products.rows.length > 0
+              && products.rows.slice(6, 10).map(product => (
                 <Grid
                   key={`${product.product_id}-specificproduct`}
                   item

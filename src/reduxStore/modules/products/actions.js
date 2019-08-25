@@ -136,11 +136,12 @@ export const getProductsByDepartmentId = (
   descriptionLength = 50,
 ) => async (dispatch) => {
   try {
-    const categories = await axiosInstance.get(
+    const products = await axiosInstance.get(
       `/products/inDepartment/${departmentId}?page=${pageNo}&limit=${limit}&descriptionLength=${descriptionLength}`,
     );
+    console.log('byDepartId', products);
 
-    return dispatch(setViewProducts(categories.data.rows));
+    return dispatch(setViewProducts(products.data));
   } catch (error) {
     console.log(error);
     return console.log(error);
@@ -162,11 +163,12 @@ export const getProductsByCategoryId = (
   descriptionLength = 50,
 ) => async (dispatch) => {
   try {
-    const categories = await axiosInstance.get(
+    const products = await axiosInstance.get(
       `/products/inCategory/${categoryId}?page=${pageNo}&limit=${limit}&descriptionLength=${descriptionLength}`,
     );
 
-    return dispatch(setViewProducts(categories.data.rows));
+    console.log('byCatId', products);
+    return dispatch(setViewProducts(products.data));
   } catch (error) {
     return console.log(error);
   }

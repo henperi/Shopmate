@@ -4,6 +4,7 @@ import {
   makeStyles, Paper, ListItem, ListItemIcon, ListItemText,
 } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
+import LinkRouter from '../LinkRouter/LinkRouter';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,17 +36,21 @@ const SideBar = ({
       {departmentName}
       <span> Categories</span>
       {categories.map(category => (
-        <ListItem
-          button
-          selected={selectedItem === category.category_id}
+        <LinkRouter
+          to={`?categories=${category.name}`}
           key={`${category.category_id}-${category.name}`}
-          onClick={() => handleListItemClick(category.category_id)}
         >
-          <ListItemIcon>
-            <FolderIcon />
-          </ListItemIcon>
-          <ListItemText primary={category.name} />
-        </ListItem>
+          <ListItem
+            button
+            selected={selectedItem === category.category_id}
+            onClick={() => handleListItemClick(category.category_id)}
+          >
+            <ListItemIcon>
+              <FolderIcon />
+            </ListItemIcon>
+            <ListItemText primary={category.name} />
+          </ListItem>
+        </LinkRouter>
       ))}
     </Paper>
   );

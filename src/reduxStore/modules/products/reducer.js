@@ -2,7 +2,10 @@ import types from './types';
 
 const initialState = {
   allProducts: [],
-  viewableProducts: [],
+  viewableProducts: {
+    rows: [],
+    count: 0,
+  },
   searchedProducts: [],
   currentProduct: {},
 };
@@ -36,7 +39,7 @@ const productsReducer = (state = initialState, action) => {
     case types.CLEAR_VIEW_PRODUCTS:
       return {
         ...state,
-        viewableProducts: [],
+        ...initialState.viewableProducts,
       };
 
     default:
