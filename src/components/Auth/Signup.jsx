@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -13,9 +13,12 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
+import { useDispatch } from 'react-redux';
+
 import clsx from 'clsx';
 import Text from '../Text/Text';
 import CustomButton from '../Buttons/CustomButtons';
+import { registerCustomer } from '../../reduxStore/modules/customer/actions';
 
 const useStyles = makeStyles(theme => ({
   content: { padding: theme.spacing(1, 4) },
@@ -52,8 +55,40 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Signup = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
+
   const { isOpen, handleClose, handleAlreadyMember } = props;
+
+  const dispatch = useDispatch();
+
+  const [signupData, setSignupData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+  });
+
+  const handleSignup = () => {
+    console.log(signupData);
+
+    const {
+      name, email, password, repeatPassword,
+    } = signupData;
+
+    if (password === repeatPassword) {
+      return dispatch(registerCustomer(name, email, password));
+    }
+    return alert('wrong password');
+  };
+
+  const handleOnChange = (event) => {
+    setSignupData({
+      ...signupData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  console.log(signupData);
 
   return (
     <Dialog
@@ -76,45 +111,70 @@ const Signup = (props) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
+              className={clsx(classes.textField, classes.centralize)}
+              margin="dense"
+              variant="outlined"
+              autoComplete="email"
+              label="Name"
+              placeholder="Name"
+              type="text"
+              name="name"
+              onChange={event => handleOnChange(event)}
+            />
+            <TextField
+              fullWidth
               id="email"
               className={clsx(classes.textField, classes.centralize)}
               margin="dense"
               variant="outlined"
-              fullWidth
               type="email"
               autoComplete="email"
               label="Email"
               placeholder="Email"
+              name="email"
+              onChange={event => handleOnChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
               id="password"
               className={clsx(classes.textField, classes.centralize)}
               margin="dense"
               variant="outlined"
-              fullWidth
               type="password"
               autoComplete="password"
               label="Password"
               placeholder="Password"
+              name="password"
+              onChange={event => handleOnChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
               id="repeat-password"
               className={clsx(classes.textField, classes.centralize)}
               margin="dense"
               variant="outlined"
-              fullWidth
               type="password"
               autoComplete="off"
               label="Re-type password"
               placeholder="Re-type password"
+              name="repeatPassword"
+              onChange={event => handleOnChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
-            <CustomButton color="primary" variant="contained" aria-label="Add" size="large" chubby>
+            <CustomButton
+              color="primary"
+              variant="contained"
+              aria-label="Add"
+              size="large"
+              chubby
+              onClick={() => handleSignup()}
+            >
               Sign Up
             </CustomButton>
           </Grid>

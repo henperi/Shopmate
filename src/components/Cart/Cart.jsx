@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 
 const Cart = (props) => {
   const classes = useStyles();
-  const { isOpen, handleClose } = props;
+  const { isOpen, handleClose, cartItems } = props;
   // const [scroll, setScroll] = React.useState('paper');
 
   return (
@@ -90,7 +90,10 @@ const Cart = (props) => {
         <Grid container>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Text classnames={['h2']}>4 Items In Your Cart</Text>
+              <Text classnames={['h2']}>
+                {cartItems.length}
+                <span> Items In Your Cart</span>
+              </Text>
             </Grid>
             <Hidden smDown>
               <Grid item lg={6}>
@@ -118,12 +121,9 @@ const Cart = (props) => {
             </Hidden>
           </Grid>
         </Grid>
-
         <Divider />
 
-        {[1, 2, 3, 4, 5].map(key => (
-          <CartItem key={`${key}-cartItem`} />
-        ))}
+        {cartItems.length > 0 && cartItems.map(item => <CartItem key={item.tem_id} item={item} />)}
       </DialogContent>
       <DialogActions classes={{ root: classes.footer }}>
         <CustomButton
@@ -149,10 +149,12 @@ const Cart = (props) => {
 Cart.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
+  cartItems: PropTypes.objectOf(array),
 };
 
 Cart.defaultProps = {
   isOpen: false,
+  cartItems: [],
 };
 
 export default Cart;

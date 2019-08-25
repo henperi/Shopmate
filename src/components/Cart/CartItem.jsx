@@ -7,8 +7,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
 
+import { useDispatch } from 'react-redux';
+
 import Text from '../Text/Text';
 import Thumbnail from '../Thumbnail/Thumbnail';
+import { updateCart } from '../../reduxStore/modules/shoppinCart/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,29 +51,47 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const CartItem = () => {
+const CartItem = ({ item }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleUpdate = (updateType) => {
+    let newQuantity = item.quantity;
+
+    if (updateType === '+') {
+      newQuantity = item.quantity + 1;
+    }
+    if (updateType === '-') {
+      newQuantity = item.quantity - 1;
+    }
+
+    dispatch(updateCart(item.item_id, newQuantity));
+  };
+
+  const handleRemove = () => {
+    dispatch(updateCart(item.item_id, 0));
+  };
 
   return (
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={12} lg={6}>
         <div className={classes.flexContainer}>
           <div className={classes.itemImage}>
-            <Thumbnail size="100px" />
+            <Thumbnail size="100px" image={item.image} />
           </div>
           <div className={classes.itemDetails}>
             <Text classnames={['h3']} weight={400}>
-              Green T-shirt 2016 Green T-shirt 2016
+              {item.name}
             </Text>
             <Text classnames={['body1']} weight={400}>
-              Men BK3569
+              {item.item_id}
             </Text>
             <Text classnames={['body2']} weight={100}>
               <IconButton
                 aria-label="Remove"
                 size="small"
                 className={classes.red}
-                onClick={() => {}}
+                onClick={() => handleRemove()}
               >
                 <CloseIcon className={classes.closeButton} />
               </IconButton>
@@ -81,18 +102,24 @@ const CartItem = () => {
       </Grid>
       <Grid item xs={12} lg={1} className={clsx(classes.centralize)}>
         <Text classnames={['body1']} weight={400}>
-          XXL
+          {item.attributes}
         </Text>
       </Grid>
       <Grid item xs={12} lg={3}>
         <div className={clsx(classes.flexContainer, classes.centralize)}>
-          <Fab color="inherit" aria-label="Add" className={classes.button}>
+          <Fab
+            color="inherit"
+            aria-label="Add"
+            className={classes.button}
+            onClick={() => handleUpdate('-')}
+          >
             <Remove />
           </Fab>
           <Paper className={clsx(classes.inputField, classes.button)} component="span">
             <InputBase
               fullWidth
-              defaultValue="2"
+              disabled
+              value={item.quantity}
               type="text"
               inputProps={{
                 style: {
@@ -101,14 +128,20 @@ const CartItem = () => {
               }}
             />
           </Paper>
-          <Fab color="inherit" aria-label="Add" className={classes.button}>
+          <Fab
+            color="inherit"
+            aria-label="Add"
+            className={classes.button}
+            onClick={() => handleUpdate('+')}
+          >
             <AddIcon />
           </Fab>
         </div>
       </Grid>
       <Grid xs={12} item lg={2} className={clsx(classes.centralize)}>
         <Text classnames={['h3']} weight={400}>
-          £21
+          £
+          {item.subtotal}
         </Text>
       </Grid>
     </Grid>

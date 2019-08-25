@@ -23,7 +23,11 @@ const Thumbnail = (props) => {
 
   return (
     <div className={classes.thumbnail}>
-      <img alt="longImage" width="100%" src={props.image} />
+      <img
+        alt="longImage"
+        width="100%"
+        src={`https://backendapi.turing.com/images/products/${props.image}`}
+      />
     </div>
   );
 };

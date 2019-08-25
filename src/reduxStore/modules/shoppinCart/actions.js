@@ -13,14 +13,17 @@ export const setCart = cartItems => ({
 
 /**
  * @description An action to set cart id in the redux store
- * @param {array} cartId
+ * @param {string} cartId
  * @returns {object} products to set accompanied by the action type
  */
+export const setCartId = (cartId) => {
+  localStorage.setItem('cartId', cartId);
 
-export const setCartId = cartId => ({
-  type: types.SET_CART_ID,
-  payload: cartId,
-});
+  return {
+    type: types.SET_CART_ID,
+    payload: cartId,
+  };
+};
 
 /**
  * @description An action to empty cart Items in the redux store
@@ -32,7 +35,7 @@ export const setEmptyCart = () => ({
 
 /**
  * @description An action to set cart total amount in the redux store
- * @param {array} total
+ * @param {number} total
  * @returns {object} products to set accompanied by the action type
  */
 export const setCartTotal = total => ({
@@ -46,17 +49,13 @@ export const setCartTotal = total => ({
  */
 export const generateCartId = () => async (dispatch) => {
   try {
-    const cartId = localStorage.getItem('cartId');
-    if (cartId) {
-      return cartId;
-    }
     const { data } = await axiosInstance.get('/shoppingcart/generateUniqueId');
 
     dispatch(setCartId(data.cart_id));
 
     return data.cart_id;
   } catch (error) {
-    return console.log(error);
+    return console.log(error.response);
   }
 };
 
@@ -68,11 +67,10 @@ export const generateCartId = () => async (dispatch) => {
 export const getCartTotal = cartId => async (dispatch) => {
   try {
     const { data } = await axiosInstance.get(`/shoppingcart/totalAmount/${cartId}`);
-    console.log('total', data.total_amount);
 
     return dispatch(setCartTotal(data.total_amount));
   } catch (error) {
-    return console.log(error);
+    return console.log(error.response);
   }
 };
 
@@ -84,11 +82,12 @@ export const getCartTotal = cartId => async (dispatch) => {
 export const getCart = cartId => async (dispatch) => {
   try {
     const cartItems = await axiosInstance.get(`/shoppingcart/${cartId}`);
-    console.log(cartItems);
+
     dispatch(getCartTotal(cartId));
 
     return dispatch(setCart(cartItems.data));
   } catch (error) {
+    localStorage.removeItem('cartId');
     return console.log(error);
   }
 };
@@ -125,11 +124,12 @@ export const updateCart = (itemId, quantity) => async (dispatch) => {
   const data = { quantity };
 
   try {
-    const cartItems = await axiosInstance.put(`/shoppingcart/update/${itemId}`, data);
+    await axiosInstance.put(`/shoppingcart/update/${itemId}`, data);
+    const cartId = localStorage.getItem('cartId');
 
-    return dispatch(setCart(cartItems.data));
+    return dispatch(getCart(cartId));
   } catch (error) {
-    return console.log(error);
+    return console.log(error.response);
   }
 };
 
@@ -144,7 +144,7 @@ export const emptyCart = cartId => async (dispatch) => {
 
     return dispatch(setEmptyCart());
   } catch (error) {
-    return console.log(error);
+    return console.log(error.response);
   }
 };
 
@@ -160,7 +160,7 @@ export const moveToCart = (itemId, cartId) => async (dispatch) => {
 
     return dispatch(getCart(cartId));
   } catch (error) {
-    return console.log(error);
+    return console.log(error.response);
   }
 };
 

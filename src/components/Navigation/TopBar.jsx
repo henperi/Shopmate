@@ -212,7 +212,7 @@ const TopBar = (props) => {
                 >
                   <Text>
                     Your bag: £
-                    {shoppingCart.total}
+                    {shoppingCart.total || 0.00}
                   </Text>
                 </LinkRouter>
               </Grid>
@@ -271,7 +271,7 @@ const TopBar = (props) => {
             </Grid>
           </Grid>
         </Toolbar>
-        <Cart isOpen={cart.isOpen} handleClose={toggleCartModal} />
+        <Cart isOpen={cart.isOpen} handleClose={toggleCartModal} cartItems={shoppingCart.cartItems} />
         <Signin
           isOpen={signin.isOpen}
           handleClose={toggleSigninModal}
