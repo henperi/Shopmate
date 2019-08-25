@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import {
   CardContent, makeStyles, CardActions, Button, Paper,
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import polo1 from '../../assets/images/polo-1.png';
 import Text from '../Text/Text';
 import ProductImg from '../Images/ProductImg';
 import LinkRouter from '../LinkRouter/LinkRouter';
+import { generateCartId, addToCart } from '../../reduxStore/modules/shoppinCart/actions';
 
 const useStyles = makeStyles(theme => ({
   chubby: {
@@ -35,13 +37,27 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'lightblue',
   },
 }));
-// background: #FFFFFF;
-// box-shadow: 0 1px 1px 0 rgba(0,0,0,0.20);
+
 const ProductCard = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const cart = useSelector(state => state.cart);
+
+  // console.log(cart);
+
+  const dispatch = useDispatch();
+
   const handleHover = () => {
     setIsHovered(!isHovered);
+  };
+
+  const handleBuyItem = async (id) => {
+    let { cartId } = cart;
+
+    if (!cartId) {
+      cartId = await dispatch(generateCartId());
+    }
+    dispatch(addToCart(cartId, id, ' '));
   };
 
   const classes = useStyles(props);
@@ -62,11 +78,22 @@ const ProductCard = (props) => {
 
       <CardActions className={`${classes.central} ${classes.cardActions}`}>
         {isHovered ? (
-          <LinkRouter color="inherit" to={`/shop-item/${props.id}`} className={classes.linkItem}>
-            <Button size="medium" variant="contained" color="primary" className={classes.chubby}>
+          <React.Fragment>
+            <LinkRouter color="inherit" to={`/shop-item/${props.id}`} className={classes.linkItem}>
+              <Button size="medium" variant="contained" color="primary" className={classes.chubby}>
+                See Item
+              </Button>
+            </LinkRouter>
+            <Button
+              onClick={() => handleBuyItem(props.id)}
+              size="medium"
+              variant="contained"
+              color="primary"
+              className={classes.chubby}
+            >
               Buy Now
             </Button>
-          </LinkRouter>
+          </React.Fragment>
         ) : (
           <Text color="primary" classnames={['h3']}>
             {`£${props.price}`}

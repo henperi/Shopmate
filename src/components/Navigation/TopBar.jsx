@@ -107,11 +107,14 @@ const TopBar = (props) => {
    * Redux selector goes here
    */
   const departments = useSelector(state => state.departments);
+  const shoppingCart = useSelector(state => state.cart);
+
+  console.log(shoppingCart);
 
   /**
    * Handler methods goe here
+   * @returns {void}
    */
-
   const toggleCartModal = () => {
     setCart({
       ...cart,
@@ -196,7 +199,7 @@ const TopBar = (props) => {
                     onClick={toggleCartModal}
                     className={classes.linkItem}
                   >
-                    <Badge badgeContent={4} color="secondary">
+                    <Badge badgeContent={shoppingCart.cartItems.length} color="secondary">
                       <CardTravelIcon />
                     </Badge>
                   </IconButton>
@@ -207,7 +210,10 @@ const TopBar = (props) => {
                   to=""
                   className={clsx(classes.linkItem, classes.alignRight)}
                 >
-                  <Text>Your bag: £3.99</Text>
+                  <Text>
+                    Your bag: £
+                    {shoppingCart.total}
+                  </Text>
                 </LinkRouter>
               </Grid>
             </Grid>
@@ -248,7 +254,11 @@ const TopBar = (props) => {
                 onClick={toggleCartModal}
                 className={classes.linkItem}
               >
-                <Badge badgeContent={4} color="secondary" classes={{ badge: classes.default }}>
+                <Badge
+                  badgeContent={shoppingCart.cartItems.length}
+                  color="secondary"
+                  classes={{ badge: classes.default }}
+                >
                   <CardTravelIcon />
                 </Badge>
               </IconButton>

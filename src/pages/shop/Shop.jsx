@@ -66,15 +66,13 @@ const Shop = (props) => {
   const products = useSelector(state => state.products.viewableProducts);
   const categories = useSelector(state => state.categories);
 
-  // local state
+  // local state **Hooks
   const [pagination, setPagination] = useState({
     offset: 0,
     limit: 10,
   });
 
   const [categoryId, setCategoryId] = useState(null);
-
-  console.log('pro', products.count);
 
   useEffect(() => {
     dispatch(getProductsByDepartmentId(id));
