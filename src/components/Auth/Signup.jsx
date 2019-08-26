@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import Text from '../Text/Text';
 import CustomButton from '../Buttons/CustomButtons';
-import { registerCustomer } from '../../reduxStore/modules/customer/actions';
+import { registerCustomer } from '../../reduxStore/modules/auth/actions';
 
 const useStyles = makeStyles(theme => ({
   content: { padding: theme.spacing(1, 4) },
@@ -69,8 +69,6 @@ const Signup = (props) => {
   });
 
   const handleSignup = () => {
-    console.log(signupData);
-
     const {
       name, email, password, repeatPassword,
     } = signupData;
@@ -78,7 +76,7 @@ const Signup = (props) => {
     if (password === repeatPassword) {
       return dispatch(registerCustomer(name, email, password));
     }
-    return alert('wrong password');
+    return alert('passwords do not match');
   };
 
   const handleOnChange = (event) => {
@@ -88,7 +86,7 @@ const Signup = (props) => {
     });
   };
 
-  console.log(signupData);
+  // console.log(signupData);
 
   return (
     <Dialog

@@ -16,7 +16,7 @@ const theme = createMuiTheme({
   },
 });
 
-console.log(theme);
+// console.log(theme);
 
 /**
  * React class component
@@ -52,7 +52,7 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   children: PropsTypes.element.isRequired,
-  actions: PropsTypes.object.isRequired,
+  actions: PropsTypes.objectOf(PropsTypes.func).isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

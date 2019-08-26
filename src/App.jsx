@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import Routes from './routes/routes';
 import store from './reduxStore';
 import initShoppingCart from './utils/shoppinCart/init';
-import initAuthCustomer from './utils/customer/initCustomer';
+import initAuthUser from './utils/auth/initAuthUser';
 
 initShoppingCart(store);
-initAuthCustomer();
+initAuthUser(store);
 
 /**
  * @description Starting Application with the routes

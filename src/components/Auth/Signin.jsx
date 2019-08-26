@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -13,10 +13,13 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
+import { useDispatch } from 'react-redux';
+
 import clsx from 'clsx';
 import Text from '../Text/Text';
 import CustomButton from '../Buttons/CustomButtons';
 import LinkRouter from '../LinkRouter/LinkRouter';
+import { loginCustomer } from '../../reduxStore/modules/auth/actions';
 
 const useStyles = makeStyles(theme => ({
   content: { padding: theme.spacing(1, 4) },
@@ -54,8 +57,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Signin = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { isOpen, handleClose, handleHaveAnAccount } = props;
+
+  const dispatch = useDispatch();
+  const [signinData, setSigninData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleOnChange = (event) => {
+    setSigninData({
+      ...signinData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSignin = () => {
+    const { email, password } = signinData;
+
+    if (email && password) {
+      return dispatch(loginCustomer(email, password));
+    }
+    return alert('All fields are required');
+  };
 
   return (
     <Dialog
@@ -78,32 +103,41 @@ const Signin = (props) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="email"
-              className={clsx(classes.textField, classes.centralize)}
+              name="email"
+              type="email"
               margin="dense"
               variant="outlined"
               fullWidth
-              type="email"
               autoComplete="email"
               label="Email"
               placeholder="Email"
+              className={clsx(classes.textField, classes.centralize)}
+              onChange={event => handleOnChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="password"
-              className={clsx(classes.textField, classes.centralize)}
+              name="password"
+              type="password"
               margin="dense"
               variant="outlined"
               fullWidth
-              type="email"
               autoComplete="password"
               label="Password"
               placeholder="Password"
+              className={clsx(classes.textField, classes.centralize)}
+              onChange={event => handleOnChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
-            <CustomButton color="primary" variant="contained" aria-label="Add" size="large" chubby>
+            <CustomButton
+              chubby
+              color="primary"
+              variant="contained"
+              aria-label="Add"
+              size="large"
+              onClick={() => handleSignin()}
+            >
               Sign In
             </CustomButton>
           </Grid>

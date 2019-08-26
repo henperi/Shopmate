@@ -139,7 +139,6 @@ export const getProductsByDepartmentId = (
     const products = await axiosInstance.get(
       `/products/inDepartment/${departmentId}?page=${pageNo}&limit=${limit}&descriptionLength=${descriptionLength}`,
     );
-    console.log('byDepartId', products);
 
     return dispatch(setViewProducts(products.data));
   } catch (error) {

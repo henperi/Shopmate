@@ -7,10 +7,11 @@ const axiosInstance = axios.create({
   },
 });
 
-export const setAuthToken = (token) => {
+export const setAuthHeader = (token, header = 'user-key') => {
+  // console.log(token, header);
   if (token) {
-    localStorage.setItem('token', token);
-    axiosInstance.defaults.headers.common['user-key'] = token;
+    localStorage.setItem('user-key', token);
+    axiosInstance.defaults.headers.common[header] = token;
   }
 };
 

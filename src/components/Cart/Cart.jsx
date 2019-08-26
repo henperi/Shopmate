@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -123,7 +123,8 @@ const Cart = (props) => {
         </Grid>
         <Divider />
 
-        {cartItems.length > 0 && cartItems.map(item => <CartItem key={item.tem_id} item={item} />)}
+        {cartItems.length > 0
+          && cartItems.map(item => <CartItem key={`${item.tem_id}-cart`} item={item} />)}
       </DialogContent>
       <DialogActions classes={{ root: classes.footer }}>
         <CustomButton
@@ -149,7 +150,7 @@ const Cart = (props) => {
 Cart.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  cartItems: PropTypes.objectOf(array),
+  cartItems: PropTypes.arrayOf(PropTypes.object),
 };
 
 Cart.defaultProps = {

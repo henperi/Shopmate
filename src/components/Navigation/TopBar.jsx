@@ -108,8 +108,9 @@ const TopBar = (props) => {
    */
   const departments = useSelector(state => state.departments);
   const shoppingCart = useSelector(state => state.cart);
+  const auth = useSelector(state => state.auth);
 
-  console.log(shoppingCart);
+  console.log(auth);
 
   /**
    * Handler methods goe here
@@ -158,23 +159,29 @@ const TopBar = (props) => {
                 <Text variant="h6" color="inherit">
                   Hi!
                   {' '}
-                  <span
-                    onClick={toggleSigninModal}
-                    role="presentation"
-                    className={classes.textAuth}
-                  >
-                    Signin
-                    {' '}
-                  </span>
-                  or
-                  <span
-                    onClick={toggleSignupModal}
-                    role="presentation"
-                    className={classes.textAuth}
-                  >
-                    {' '}
-                    Register
-                  </span>
+                  {!auth.isAuthenticated ? (
+                    <React.Fragment>
+                      <span
+                        onClick={toggleSigninModal}
+                        role="presentation"
+                        className={classes.textAuth}
+                      >
+                        Signin
+                        {' '}
+                      </span>
+                      or
+                      <span
+                        onClick={toggleSignupModal}
+                        role="presentation"
+                        className={classes.textAuth}
+                      >
+                        {' '}
+                        Register
+                      </span>
+                    </React.Fragment>
+                  ) : (
+                    <span>{auth.user.name}</span>
+                  )}
                 </Text>
               </Grid>
 
@@ -211,8 +218,8 @@ const TopBar = (props) => {
                   className={clsx(classes.linkItem, classes.alignRight)}
                 >
                   <Text>
-                    Your bag: £
-                    {shoppingCart.total || 0.00}
+Your bag: £
+                    {shoppingCart.total || 0.0}
                   </Text>
                 </LinkRouter>
               </Grid>
@@ -271,7 +278,11 @@ const TopBar = (props) => {
             </Grid>
           </Grid>
         </Toolbar>
-        <Cart isOpen={cart.isOpen} handleClose={toggleCartModal} cartItems={shoppingCart.cartItems} />
+        <Cart
+          isOpen={cart.isOpen}
+          handleClose={toggleCartModal}
+          cartItems={shoppingCart.cartItems}
+        />
         <Signin
           isOpen={signin.isOpen}
           handleClose={toggleSigninModal}
